@@ -29,7 +29,7 @@ React dashboard (Recharts, Tailwind, Vite) that visualizes simulation artifacts:
 
 ![RL Policy Heatmaps](RLPolicyHeatmaps.png)
 
-![RL Policy Heatmaps](Adverse Selection Sweep + P&L Decomposition.png)
+![Adverse Selection Sweep + P&L Decomposition](Adverse Selection Sweep + P&L Decomposition.png)
 
 ## Session Runner
 
