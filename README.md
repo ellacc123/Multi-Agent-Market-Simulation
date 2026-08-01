@@ -27,9 +27,8 @@ Price-time priority via `TreeMap<Integer, PriceLevel>` per side (bids reverse-or
 
 React dashboard (Recharts, Tailwind, Vite) that visualizes simulation artifacts: RL policy heatmaps with AS baseline comparison, adverse selection sweep plots, and MRR P&L attribution breakdowns. Loads JSON/CSV output from the demo runners.
 
-![RL Policy Heatmaps](RLPolicyHeatmaps.png)
-
-![Adverse Selection Sweep + P&L Decomposition](Adverse Selection Sweep + P&L Decomposition.png)
+<img src="RLPolicyHeatmaps.png" alt="RL Policy Heatmaps" width="300">
+<img src="Adverse%20Selection%20Sweep%20+%20P&L%20Decomposition.png" alt="Adverse Selection Sweep + P&L Decomposition" width="300">
 
 ## Session Runner
 
