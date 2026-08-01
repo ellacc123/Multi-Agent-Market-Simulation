@@ -3,7 +3,7 @@
 Deterministic continuous double auction simulator. Thread-confined matching engine, four agent types, full session replay. 
 Programmed in Java 17.
 
-## Structure
+## Project Structure
 
 ```
 engine/     Order book, matching, book integrity assertions
