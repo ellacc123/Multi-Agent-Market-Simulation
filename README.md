@@ -1,18 +1,18 @@
 # Multi-Agent-Market-Simulation (NEXUS)
 
-Deterministic continuous double auction simulator. Thread-confined matching engine, four agent types, full session replay. Java 17, zero production dependencies.
+Deterministic continuous double auction simulator. Thread-confined matching engine, four agent types, full session replay. 
+Programmed in Java 17.
 
-## Matching Engine
+## Structure
 
-Price-time priority via `TreeMap<Integer, PriceLevel>` per side (bids reverse-ordered, asks natural), each level backed by an `ArrayDeque` FIFO queue. All prices in integer cents, all quantities in integer shares. No floating point in the matching path.
-
-**Determinism by construction.** No locks, no concurrent collections, no thread sharing. Trade and resting-order IDs come from monotonic counters. Sessions are seeded via a deterministic SplitMix-style derivation function, so any run is fully reproducible given its seed.
-
-**Runtime invariants.** `assertBookIntegrity()` fires after every `submit()` and `cancel()` on the hot path, not in tests. It verifies the book is never crossed, price-level map keys match stored prices, no empty levels linger, and intra-level FIFO ordering is preserved via strictly increasing `bookSequence`.
-
-**Narrow by design.** Only LIMIT GTC and LIMIT IOC are accepted. MARKET orders and other time-in-force types are rejected at the gate rather than partially handled.
-
-`Order` and `Trade` are immutable records. `RestingOrder` wraps an `Order` and exposes exactly one mutable field (`remainingQuantityShares`).
+```
+engine/     Order book, matching, book integrity assertions
+sim/        Clock, deterministic session runner, demo entry points
+agent/      AS market maker, RL market maker, informed + noise traders
+rl/         State discretizer, Q-table, experience replay, policy export
+metrics/    MRR attribution, Kyle's lambda, stylized facts validation
+frontend/   React dashboard (Recharts, Tailwind, Vite)
+```
 
 ## Agents
 
@@ -29,6 +29,18 @@ React dashboard (Recharts, Tailwind, Vite) that visualizes simulation artifacts:
 
 <img src="RLPolicyHeatmaps.png" alt="RL Policy Heatmaps" width="350">
 <img src="Adverse%20Selection%20Sweep%20+%20P&L%20Decomposition.png" alt="Adverse Selection Sweep + P&L Decomposition" width="350">
+
+## Matching Engine
+
+Price-time priority via `TreeMap<Integer, PriceLevel>` per side (bids reverse-ordered, asks natural), each level backed by an `ArrayDeque` FIFO queue. All prices in integer cents, all quantities in integer shares. No floating point in the matching path.
+
+**Determinism by construction.** No locks, no concurrent collections, no thread sharing. Trade and resting-order IDs come from monotonic counters. Sessions are seeded via a deterministic SplitMix-style derivation function, so any run is fully reproducible given its seed.
+
+**Runtime invariants.** `assertBookIntegrity()` fires after every `submit()` and `cancel()` on the hot path, not in tests. It verifies the book is never crossed, price-level map keys match stored prices, no empty levels linger, and intra-level FIFO ordering is preserved via strictly increasing `bookSequence`.
+
+**Narrow by design.** Only LIMIT GTC and LIMIT IOC are accepted. MARKET orders and other time-in-force types are rejected at the gate rather than partially handled.
+
+`Order` and `Trade` are immutable records. `RestingOrder` wraps an `Order` and exposes exactly one mutable field (`remainingQuantityShares`).
 
 ## Session Runner
 
@@ -59,13 +71,3 @@ mvn test  # 67 tests, 23 test classes
 cd frontend && npm install && npm run dev
 ```
 
-## Structure
-
-```
-engine/     Order book, matching, book integrity assertions
-sim/        Clock, deterministic session runner, demo entry points
-agent/      AS market maker, RL market maker, informed + noise traders
-rl/         State discretizer, Q-table, experience replay, policy export
-metrics/    MRR attribution, Kyle's lambda, stylized facts validation
-frontend/   React dashboard (Recharts, Tailwind, Vite)
-```
