@@ -3,6 +3,13 @@
 Deterministic continuous double auction simulator. Thread-confined matching engine, four agent types, full session replay. 
 Programmed in Java 17.
 
+## Frontend
+
+React dashboard (Recharts, Tailwind, Vite) that visualizes simulation artifacts: RL policy heatmaps with AS baseline comparison, adverse selection sweep plots, and MRR P&L attribution breakdowns. Loads JSON/CSV output from the demo runners.
+
+<img src="RLPolicyHeatmaps.png" alt="RL Policy Heatmaps" width="350">
+<img src="Adverse%20Selection%20Sweep%20+%20P&L%20Decomposition.png" alt="Adverse Selection Sweep + P&L Decomposition" width="350">
+
 ## Project Structure
 
 ```
@@ -22,13 +29,6 @@ frontend/   React dashboard (Recharts, Tailwind, Vite)
 | RL Market Maker | Tabular Q-learning, 12-feature state discretizer, 25-action bid/ask offset grid. Falls back to AS policy below 10 state visits. |
 | Informed Trader | Directional orders against the true value process. |
 | Noise Trader | Random order flow. |
-
-## Frontend
-
-React dashboard (Recharts, Tailwind, Vite) that visualizes simulation artifacts: RL policy heatmaps with AS baseline comparison, adverse selection sweep plots, and MRR P&L attribution breakdowns. Loads JSON/CSV output from the demo runners.
-
-<img src="RLPolicyHeatmaps.png" alt="RL Policy Heatmaps" width="350">
-<img src="Adverse%20Selection%20Sweep%20+%20P&L%20Decomposition.png" alt="Adverse Selection Sweep + P&L Decomposition" width="350">
 
 ## Matching Engine
 
